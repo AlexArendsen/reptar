@@ -27,9 +27,34 @@ fname=$2
 fargs="${@:3}"
 ttype=$( echo "${fname}" | sed -Ee 's/^.+\.//' )
 
+iscmd() {
+  if ! path=$(type -p "$1") || [ -z "${path}" ]; then
+    echo 0
+  else
+    echo 1
+  fi
+}
 
 # Zips are different, handle them right away
 if [[ "$ttype" == "zip" ]]; then
+
+  # Check taht the proper backedn is installed
+  case $mode in
+    extract|view)
+      if [[ "0" == "$(iscmd unzip)" ]]; then
+        echo "Cannot complete command, 'unzip' must be installed."
+        exit 1
+      fi
+      ;;
+    create)
+      if [[ "0" == "$(iscmd zip)" ]]; then
+        echo "Cannot complete command, 'zip' must be installed."
+        exit 1
+      fi
+      ;;
+  esac
+
+  # Do the requested action
   case $mode in
     extract)
       unzip "${fname}"
@@ -44,14 +69,46 @@ if [[ "$ttype" == "zip" ]]; then
   exit 0
 fi
 
+# rars are also different, handle them next
+if [[ "$ttype" == "rar" ]]; then
+
+  # Check that the proper backend is installed
+  case $mode in
+    extract|view)
+      if [[ "0" == "$(iscmd unrar)" ]]; then
+        echo "Cannot complete command, 'unrar' must be installed."
+        exit 1
+      fi
+      ;;
+    create)
+      if [[ "0" == "$(iscmd rar)" ]]; then
+        echo "Cannot complete command, 'rar' must be installed."
+        exit 1
+      fi
+      ;;
+  esac
+
+  # Do the requested action
+  case $mode in
+    extract)
+      unrar e "${fname}"
+      ;;
+    view)
+      unrar lta "${fname}"
+      ;;
+    create)
+      rar a "${fname}" ${fargs}
+      ;;
+  esac
+
+  exit 0
+fi
+
 # Otherwise it's a tar
-iscmd() {
-  if ! path=$(type -p "$1") || [ -z "${path}" ]; then
-    echo 0
-  else
-    echo 1
-  fi
-}
+if [[ "0" == "$(iscmd tar)" ]]; then
+  echo "Cannot complete command, 'tar' must be installed."
+  exit 1
+fi
 
 action=""
 variant=""
