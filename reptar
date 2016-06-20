@@ -38,7 +38,7 @@ iscmd() {
 # Zips are different, handle them right away
 if [[ "$ttype" == "zip" ]]; then
 
-  # Check taht the proper backedn is installed
+  # Check that the proper backend is installed
   case $mode in
     extract|view)
       if [[ "0" == "$(iscmd unzip)" ]]; then
