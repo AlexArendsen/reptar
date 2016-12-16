@@ -1,9 +1,10 @@
 #!/bin/bash
 
 doc="
-RepTAR CLI Fontend For tar
+RepTAR CLI Fontend For archive files
 
     reptar [MODE] [ARCHIVE] [FILES ...]
+
     # Examples
     reptar extract myarchive.tar.gz
     reptar view myarchive.tar.bz2

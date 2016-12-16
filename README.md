@@ -1,12 +1,12 @@
 # RepTAR
-Simple CLI Frontend for `tar`
+Simple CLI Frontend for extracting, viewing, and creating archive files.
 
 ## Synopsis
 
 RepTAR is a simple, easy-to-use frontend for extracting, viewing, and creating
-tarballs and zip files. Support is provided for plain tar archives, as well as
-those compressed using gzip, bzip2, xz, lzip, lzop, lzma, and compress. Plain
-zip archives are supported as well. File extensions are interpreted
+archive files. Support is provided for plain tar archives, as well as those
+compressed using gzip, bzip2, xz, lzip, lzop, lzma, and compress. Plain zip and
+rar archives are supported as well. File extensions are interpreted
 automatically, eliminating the need to remember any pesky compression options
 or flags!
 
@@ -19,11 +19,11 @@ or flags!
 RepTAR accepts the following commands:
 
 * **extract**: Extracts the contents of an archive, according to its file
-    extension.
+  extension.
 * **view**: Prints the file listing contained by the archive without
-    extraction.
+  extraction.
 * **create**: Creates an archive containing the specified `FILES`. The format
-    is interpreted based on the archive's file extension.
+  is interpreted based on the archive's file extension.
 * **help**: Prints a help message and quits.
 
 
